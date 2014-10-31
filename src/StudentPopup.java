@@ -1,25 +1,18 @@
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class StudentPopup extends javax.swing.JDialog {
 
-    
-    public StudentPopup(java.awt.Frame parent, boolean modal) {
+    Student temp;
+    public StudentPopup(java.awt.Frame parent, boolean modal) 
+    {
         super(parent, modal);
         initComponents();
     }
 
-    public String getName()
-    {
-        return txtname.getText();
-    }
     
-    public int[] getMarks()
-    {
-        int marks[] = new int[3];
-        marks[0] = Integer.parseInt(tblmarks.getValueAt(0,0).toString());
-        marks[1] = Integer.parseInt(tblmarks.getValueAt(0,1).toString());
-        marks[2] = Integer.parseInt(tblmarks.getValueAt(0,2).toString());
-        return marks;
-        
-    }
+    
+    
     
     
     @SuppressWarnings("unchecked")
@@ -45,10 +38,10 @@ public class StudentPopup extends javax.swing.JDialog {
 
         tblmarks.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+                {null, null, null, null}
             },
             new String [] {
-                "Mark 1", "Mark 2", "Mark 3"
+                "Mark 1", "Mark 2", "Mark 3", "Mark 4"
             }
         ));
         tblmarks.setColumnSelectionAllowed(true);
@@ -59,6 +52,7 @@ public class StudentPopup extends javax.swing.JDialog {
             tblmarks.getColumnModel().getColumn(0).setResizable(false);
             tblmarks.getColumnModel().getColumn(1).setResizable(false);
             tblmarks.getColumnModel().getColumn(2).setResizable(false);
+            tblmarks.getColumnModel().getColumn(3).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -66,9 +60,9 @@ public class StudentPopup extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,7 +96,7 @@ public class StudentPopup extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 43, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -127,9 +121,33 @@ public class StudentPopup extends javax.swing.JDialog {
     }//GEN-LAST:event_txtnameActionPerformed
 
     private void btnokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnokActionPerformed
+        DefaultTableModel model = (DefaultTableModel)(tblmarks.getModel());
+        String name = txtname.getText();
+        int marks[] = new int[4];
+        try{
+            marks[0] = Integer.parseInt(tblmarks.getValueAt(0,0).toString());
+            marks[1] = Integer.parseInt(tblmarks.getValueAt(0,1).toString());
+            marks[2] = Integer.parseInt(tblmarks.getValueAt(0,2).toString());
+            marks[3] = Integer.parseInt(tblmarks.getValueAt(0,3).toString());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Fill out all fields");
+            return;
+        }
+        temp = new Student(name,marks);
         this.dispose();
     }//GEN-LAST:event_btnokActionPerformed
-
+    public void setForm(Student s)
+    {
+        DefaultTableModel model = (DefaultTableModel)(tblmarks.getModel());
+        txtname.setText(s.getName());
+        model.setValueAt(s.getMark(1), 0,0);
+        model.setValueAt(s.getMark(2), 0,1);
+        model.setValueAt(s.getMark(3), 0,2);
+        model.setValueAt(s.getMark(4), 0,3);
+    }
+    public Student getStudent(){
+        return temp;
+    }
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
