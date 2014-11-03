@@ -23,7 +23,7 @@ public class Student {
 
     public int getAverage() {
     	int average;
-        average = (test[0] + test[1] + test[2] + test[3]) / 3;
+        average = (test[0] + test[1] + test[2] + test[3]) / 4;
     	return average;
     }
 
@@ -50,7 +50,7 @@ public class Student {
     	String errormessage = null;
     	//check if name is entered
     	if (name.length() < 2) 
-    		errormessage += "\nName is required\nPlease re-enter all data";
+    		errormessage += "\nName is required";
     	
 	if (test[0] < 0 || test[0] > 100 || test[1] < 0 || test[1] > 100 || test[2] < 0 || test[2] > 100 || test[3] < 0 || test[3] > 100) 
     		errormessage += "\nAt least one mark is not within acceptable range.";

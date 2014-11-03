@@ -309,7 +309,7 @@ int size, currentstudent;
     private void btnendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnendActionPerformed
         if (currentstudent < size -1 && currentstudent > -1)
         {
-            //currentstudent=;
+            currentstudent = size-1;
             showStudent();
         }
     }//GEN-LAST:event_btnendActionPerformed
@@ -322,7 +322,7 @@ int size, currentstudent;
         txtmark4.setText("" + s[currentstudent].getMark(4));
         lblaverage.setText("" + s[currentstudent].getAverage());
         lblcount.setText("" + size);
-        lblindex.setText("" + currentstudent);
+        lblindex.setText("" + (currentstudent+1));
     }
     
     
