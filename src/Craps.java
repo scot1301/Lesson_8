@@ -31,7 +31,8 @@ public class Craps {
     }
     
     public boolean hasLost(){
-        if (rollnum==1) return (getTotal()==2 || getTotal()==3 || getTotal()==10);
+        if (rollnum==1) 
+            return (getTotal()==2 || getTotal()==3 || getTotal()==10);
         else
             return (getTotal()==7);
     }

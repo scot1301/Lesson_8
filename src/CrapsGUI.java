@@ -4,13 +4,18 @@ import java.net.URL;
 public class CrapsGUI extends javax.swing.JFrame {
     Craps game;
     boolean newgame;
-    int money=100;
+    int money=100, winningroll = 0;
     public CrapsGUI() {
         initComponents();
         game = new Craps();
         txtgame.setEditable(false);
         newgame=true;
-        txtgame.setText("Welcome to the game\n\nBasic Info\n------------------\nRoll a 7 or 11 on the first roll - You Win\nRoll a 2,3 or 10 on the first roll - You Lose\nGoodluck!");
+        txtgame.setText("Welcome to the game\n\nBasic Info\n------------------\n"
+                +"Roll a 7 or 11 on the first roll - You Win\n"
+                +"Roll a 2, 3 or 10 on the first roll - You Lose\n"
+                +"If you don't roll any of the above numbers that win or lose\n"
+                +"Then the game continues, to win you must roll the first number\nyou rolled that game."
+                +" If you roll a 7, you lose");
         
     }
 
@@ -29,6 +34,8 @@ public class CrapsGUI extends javax.swing.JFrame {
         lblmoney = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtgame = new javax.swing.JTextArea();
+        lblmoneytotal = new javax.swing.JLabel();
+        lblrolltotal = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -74,36 +81,45 @@ public class CrapsGUI extends javax.swing.JFrame {
         txtgame.setRows(5);
         jScrollPane1.setViewportView(txtgame);
 
+        lblmoneytotal.setFont(new java.awt.Font("Trajan Pro", 0, 14)); // NOI18N
+        lblmoneytotal.setText("Money:");
+
+        lblrolltotal.setFont(new java.awt.Font("Trajan Pro", 0, 14)); // NOI18N
+        lblrolltotal.setText("Roll Total:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnroll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnquit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblmoney, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblmoneytotal, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblmoney, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(lblrolltotal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnroll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnquit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(42, 42, 42)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 32, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(lbldie1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(24, 24, 24)))
-                                .addComponent(lbldie2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(81, 81, 81)))))
-                .addGap(37, 37, 37))
+                                        .addGap(41, 41, 41)
+                                        .addComponent(lbldie2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(9, 9, 9)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 28, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,12 +136,14 @@ public class CrapsGUI extends javax.swing.JFrame {
                     .addComponent(lbldie1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbldie2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblmoney, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbltotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblmoneytotal, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblrolltotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -139,15 +157,16 @@ public class CrapsGUI extends javax.swing.JFrame {
         lbldie2.setIcon(game.getDiePic(2));
         
         if (newgame){
-            txtgame.setText("New Game\n----\nYou rolled a: " + game.getTotal());
+            txtgame.setText("New Game\n------------\nYou rolled a: " + game.getTotal());
             newgame=false;
             money-=5;
             lblmoney.setText("$" + money);
+            winningroll = game.getTotal();
         }
         else
-            txtgame.setText("\n----\nYou rolled a: "+ game.getTotal());
+            txtgame.setText("\n------------\nYou rolled a: "+ game.getTotal());
             
-        lbltotal.setText("" + game.getTotal());
+        lbltotal.setText("  " + game.getTotal());
         
         
         
@@ -157,7 +176,7 @@ public class CrapsGUI extends javax.swing.JFrame {
         }
     
         if (game.hasWon()){
-            txtgame.append(" - You Won!"+"\n-----\n Click roll to start a new game");
+            txtgame.append(" - You Won!"+"\n------------\n Click roll to start a new game");
                 game = new Craps();
                 newgame = true;
                 money +=15;
@@ -165,13 +184,13 @@ public class CrapsGUI extends javax.swing.JFrame {
         }
     
         else if (game.hasLost()){
-            txtgame.append(" - You Lost"+"\n-----\n Click roll to start a new game");
+            txtgame.append(" - You Lost"+"\n------------\n Click roll to start a new game");
                 game = new Craps();
                 newgame = true;
         }
 
         else
-            txtgame.append("\nGame continues...\nRoll a " + game.getTotal() + " to win or a 7 to lose");
+            txtgame.append("\nGame continues...\nRoll a " + winningroll + " to win or a 7 to lose");
     
     }//GEN-LAST:event_btnrollActionPerformed
    
@@ -196,6 +215,8 @@ public class CrapsGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lbldie1;
     private javax.swing.JLabel lbldie2;
     private javax.swing.JLabel lblmoney;
+    private javax.swing.JLabel lblmoneytotal;
+    private javax.swing.JLabel lblrolltotal;
     private javax.swing.JLabel lbltotal;
     private javax.swing.JTextArea txtgame;
     // End of variables declaration//GEN-END:variables
